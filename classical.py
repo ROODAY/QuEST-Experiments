@@ -1,20 +1,18 @@
 import random
 import operator
 
-def generateWord(length):
-  i = 0
+def generateBitString(length):
   result = ""
-  while i < length:
-    letter = chr(97 + int(26 * random.random()))
+  while len(result) < length:
+    letter = str(round(random.random()))
     result += letter
-    i += 1
   return result
 
 def generateInitialPopulation(sizePopulation, password):
   population = []
   i = 0
   while i < sizePopulation:
-    population.append(generateWord(len(password)))
+    population.append(generateBitString(len(password)))
     i += 1
   return population
 
@@ -32,9 +30,6 @@ def gradePopulation(population, password):
   populationGrades = []
   for individual in population:
     populationGrades.append((individual, fitness(password, individual)))
-  #for key,val in populationGrades.items():
-  #  if val is None:
-  #    populationGrades[key] = 0
   return sorted(populationGrades, key=lambda tup: tup[1], reverse=True)
 
 def evolve(sortedPopulation):
@@ -68,9 +63,9 @@ def createChildren(parents, numChildren):
 def mutateWord(word):
   index = int(random.random() * len(word))
   if index == 0:
-    word = chr(97 + int(26 * random.random())) + word[1:]
+    word = str(round(random.random())) + word[1:]
   else:
-    word = word[:index] + chr(97 + int(26 * random.random())) + word[index+1:]
+    word = word[:index] + str(round(random.random())) + word[index+1:]
   return word
 
 def mutatePopulation(population):
@@ -79,19 +74,16 @@ def mutatePopulation(population):
       population[i] = mutateWord(population[i])
   return population
 
-target = "quantum"
-popSize = 25
 
-p = gradePopulation(generateInitialPopulation(popSize, target), target)
-count = 0
-while p[0][0] != target:
-  print(p[0][0])
-  p = evolve(p)
-  p = createChildren(p, popSize)
-  p = mutatePopulation(p)
-  p = gradePopulation(p, target)
-  count += 1
-  if p[0][0] == target:
-    print(p[0][0])
-    print("Converged on target: \"{}\" in {} generations!".format(target, count))
-    break
+def runClassicalTrial(target, popSize):
+  p = gradePopulation(generateInitialPopulation(popSize, target), target)
+  count = 0
+  while p[0][0] != target:
+    p = evolve(p)
+    p = createChildren(p, popSize)
+    p = mutatePopulation(p)
+    p = gradePopulation(p, target)
+    count += 1
+    if p[0][0] == target:
+      break
+  return count
