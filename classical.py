@@ -69,8 +69,9 @@ def mutateWord(word):
   return word
 
 def mutatePopulation(population):
+  mutateRate = 0.2 #0.01
   for i in range(len(population)):
-    if random.random() < 0.01:
+    if random.random() < mutateRate:
       population[i] = mutateWord(population[i])
   return population
 
