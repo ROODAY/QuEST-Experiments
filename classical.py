@@ -68,21 +68,20 @@ def mutateWord(word):
     word = word[:index] + str(round(random.random())) + word[index+1:]
   return word
 
-def mutatePopulation(population):
-  mutateRate = 0.2 #0.01
+def mutatePopulation(population, mutateRate):
   for i in range(len(population)):
     if random.random() < mutateRate:
       population[i] = mutateWord(population[i])
   return population
 
 
-def runClassicalTrial(target, popSize):
+def runClassicalTrial(target, popSize, mutateRate):
   p = gradePopulation(generateInitialPopulation(popSize, target), target)
   count = 0
   while p[0][0] != target:
     p = evolve(p)
     p = createChildren(p, popSize)
-    p = mutatePopulation(p)
+    p = mutatePopulation(p, mutateRate)
     p = gradePopulation(p, target)
     count += 1
     if p[0][0] == target:

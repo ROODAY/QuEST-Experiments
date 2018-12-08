@@ -11,16 +11,17 @@ from quantum import runQuantumTrial
 
 
 N = 1000
-target = "10101"
+target = "1010101"
 popSize = 10
-theta = 0.002
+theta = 0.01
+mutateRate = 0.01
 cT = []
 qT = []
 
 print("Running classical trials...")
 printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 for i in range(N):
-    cT.append(runClassicalTrial(target, popSize))
+    cT.append(runClassicalTrial(target, popSize, mutateRate))
     printProgressBar(i + 1, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
 cAvg = sum(cT) / float(len(cT))

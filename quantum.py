@@ -9,12 +9,13 @@ import copy
 qvm = QVMConnection()
 currentBest = []
 
-def generateInitialPopulation(sizePopulation):
+def generateInitialPopulation(sizePopulation, nBits):
   population = []
-  i = 0
-  while i < sizePopulation:
-    population.append(Program(H(0), H(1), H(2), H(3), H(4)))
-    i += 1
+  for i in range(sizePopulation):
+    p = Program()
+    for i in range(nBits):
+      p += H(i)
+    population.append(p)
   return population
 
 def fitness(password, testWord):
@@ -58,12 +59,8 @@ def evolve(qPop, currentBest, theta):
 def mutatePopulation(population):
   return population
 
-target = "10101"
-popSize = 10
-theta = 0.002
-
 def runQuantumTrial(target, popSize, theta):
-  qPop = generateInitialPopulation(popSize)
+  qPop = generateInitialPopulation(popSize, len(target))
   p = gradePopulation(qPop, target)
   count = 0
   while p[0][0] != target:
