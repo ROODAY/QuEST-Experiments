@@ -1,2 +1,9 @@
-# PY-536-Final-Project
-Comparing the performance of classical vs. quantum inspired evolutionary algorithms
+# QuEST Experiments
+
+This repository contains code for replicating the experiments described in Quantum-inspired Evolutionary-algorithm Speedup Time: QuEST, an end-of-term paper for BU PY 536 - Quantum Computing - Fall 2018. By running `driver.py`, you can compare the efficiency of Classical Evolutionary Algorithms vs. Quantum Evolutionary Algorithms, albeit on a contrived example. The code compares the number of generations required to find a target bit-string, with a fixed population size, mutation rate, and theta. All variables are easily configurable in `driver.py` to allow for easy exploration of the algorithms. The general structure of the evolutionary algorithms follow the one outlined in ["Was Darwin a Great Computer Scientist?"](https://blog.sicara.com/getting-started-genetic-algorithms-python-tutorial-81ffa1dd72f9), and the concept was motivated by the [Quantum-Inspired Evolutionary Algorithm for a Class of Combinatorial Optimization](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1134125&tag=1) paper.
+
+# Setup
+
+To run the experiments, you'll need Python 3.6+, PyQuil, and the Rigetti Forest SDK. Information on installing the latter two can be found [here](http://docs.rigetti.com/en/stable/start.html). Once those are installed, you'll need to run a few terminals. On the first, run `quilc -S` and on the second run `qvm -S`. These start the servers from Forest that PyQuil relies on. From here, you can modify the variables in `driver.py` and then run `python driver.py` in a third terminal to get the results.
+
+For plotting results, you can see examples in the files named `plot*.py`. To run them, you'll need to install matplotlib. Other than that they have no requirements, and can be run like the driver.

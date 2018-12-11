@@ -8,30 +8,41 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
 
 from classical import runClassicalTrial
 from quantum import runQuantumTrial
+from randomGuess import runRandomTrial
 
 
-N = 1000
-target = "1010101"
+N = 500
+target = "101"
 popSize = 10
-theta = 0.01
-mutateRate = 0.01
+theta = 0.2
+mutateRate = 1
 cT = []
 qT = []
+rT = []
 
-print("Running classical trials...")
+print("Running random guessing trials...")
+printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
+for i in range(N):
+    rT.append(runRandomTrial(target, popSize))
+    printProgressBar(i + 1, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
+
+rAvg = sum(rT) / float(len(rT))
+print("Average generations for random guessing:", rAvg)
+
+print("\nRunning classical EA trials...")
 printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 for i in range(N):
     cT.append(runClassicalTrial(target, popSize, mutateRate))
     printProgressBar(i + 1, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
 cAvg = sum(cT) / float(len(cT))
-print("Average generations for classical:", cAvg)
+print("Average generations for classical EA:", cAvg)
 
-print("Running quantum trials...")
+print("\nRunning quantum EA trials...")
 printProgressBar(0, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 for i in range(N):
     qT.append(runQuantumTrial(target, popSize, theta))
     printProgressBar(i + 1, N, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
 qAvg = sum(qT) / float(len(qT))
-print("Average generations for classical:", qAvg)
+print("Average generations for quantum EA:", qAvg)

@@ -1,10 +1,11 @@
 import random
 import operator
+import copy
+import math
+from functools import reduce
 from pyquil.quil import Program
 from pyquil.api import QVMConnection
 from pyquil.gates import *
-from functools import reduce
-import copy
 
 qvm = QVMConnection()
 currentBest = []
@@ -56,9 +57,6 @@ def evolve(qPop, currentBest, theta):
 
   return qPop
 
-def mutatePopulation(population):
-  return population
-
 def runQuantumTrial(target, popSize, theta):
   qPop = generateInitialPopulation(popSize, len(target))
   p = gradePopulation(qPop, target)
@@ -66,7 +64,6 @@ def runQuantumTrial(target, popSize, theta):
   while p[0][0] != target:
     currentBest = p[0][0]
     qPop = evolve(qPop, currentBest, theta)
-    #p = mutatePopulation(p)
     p = gradePopulation(qPop, target)
     count += 1
     if p[0][0] == target:
